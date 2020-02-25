@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-    <id>https://huaxiaobin.com</id>
+    <id>https://huaxiaobin.github.io</id>
     <title>HuaYunBin&apos;s Blog</title>
-    <updated>2020-02-02T13:59:12.027Z</updated>
+    <updated>2020-02-25T01:33:43.765Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
-    <link rel="alternate" href="https://huaxiaobin.com"/>
-    <link rel="self" href="https://huaxiaobin.com/atom.xml"/>
+    <link rel="alternate" href="https://huaxiaobin.github.io"/>
+    <link rel="self" href="https://huaxiaobin.github.io/atom.xml"/>
     <subtitle>Read(); Think(); Try(); Repeat();</subtitle>
-    <logo>https://huaxiaobin.com/images/avatar.png</logo>
-    <icon>https://huaxiaobin.com/favicon.ico</icon>
+    <logo>https://huaxiaobin.github.io/images/avatar.png</logo>
+    <icon>https://huaxiaobin.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, HuaYunBin&apos;s Blog</rights>
     <entry>
         <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://huaxiaobin.com/post/hello-gridea</id>
-        <link href="https://huaxiaobin.com/post/hello-gridea">
+        <id>https://huaxiaobin.github.io/post/hello-gridea</id>
+        <link href="https://huaxiaobin.github.io/post/hello-gridea">
         </link>
         <updated>2018-12-11T16:00:00.000Z</updated>
         <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
