@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>App反编译 | HuaYunBin&#39;s Blog</title>
+<title>Linux虚拟屏幕Xvfb的介绍 | HuaYunBin&#39;s Blog</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,7 +18,11 @@
 
 
 
-    <meta name="description" content="Read(); Think(); Try(); Repeat();">
+    <meta name="description" content="Xvfb是流行的虚拟现实库，可以使很多需要图形界面的程序虚拟运行；
+
+使用原因
+淘宝列表页爬取经常会跳滑动验证码，需要使用puppeteer控制浏览器模拟人工滑动，而在无头模式下，无论怎么滑动都无法通过，必须使用有头模式，而CentOS服务..." />
+    <meta name="keywords" content="" />
   </head>
   <body>
     <div id="app" class="main">
@@ -92,34 +96,58 @@
 
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
-          <h2 class="current-tag">标签: App反编译</h2>
-          
-            <article class="post-item">
-              <div class="left">
+          <div class="post-detail">
+            <h2 class="post-title">Linux虚拟屏幕Xvfb的介绍</h2>
+            <div class="post-date">2020-02-28</div>
+            
+            <div class="post-content" v-pre>
+              <p><a href="https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml">Xvfb</a>是流行的虚拟现实库，可以使很多需要图形界面的程序虚拟运行；</p>
+<!-- more -->
+<h2 id="使用原因">使用原因</h2>
+<p>淘宝列表页爬取经常会跳滑动验证码，需要使用puppeteer控制浏览器模拟人工滑动，而在无头模式下，无论怎么滑动都无法通过，必须使用有头模式，而CentOS服务器上没有界面，所以只能使用虚拟屏幕，使浏览器运行在虚拟屏幕上。</p>
+<h2 id="安装及使用">安装及使用</h2>
+<pre><code class="language-shell"># 安装
+yum install Xvfb
+
+# 启动  7:虚拟屏幕id，使用时需要用到；  1336x768x24:屏幕分辨率；
+Xvfb :7 -screen 0 1336x768x24 2&gt;/dev/null &amp;
+
+# 使用	启动puppeteer程序前需指定运行在哪个虚拟屏幕上，如下命令，运行在虚拟屏幕id为7的上
+export DISPLAY=:7
+</code></pre>
+<h2 id="远程控制-监控">远程控制、监控</h2>
+<p>一般情况下，Xvfb都运行在Linux服务器上，你无法看到虚拟屏幕的运行情况，程序的调试十分麻烦，所以你需要在本地远程连接你服务器上所在的虚拟屏幕，进行监控控制。<br>
+<strong>服务器端</strong><br>
+x11vnc：远程桌面，可以使人远程连接服务器上的虚拟屏幕；</p>
+<pre><code class="language-shell"># 安装 ubuntu
+sudo apt install x11vnc
+# 安装 centos
+yum install -y x11vnc
+
+# 启动  5900:连接端口  cyipp:连接密码  7:虚拟屏幕id
+x11vnc -listen 0.0.0.0 -rfbport 5900 -noipv6 -passwd cyipp -display :7
+</code></pre>
+<p><strong>用户端</strong><br>
+可以使用vncviewer工具远程连接。</p>
+<h2 id="其它">其它</h2>
+<p>python有一个第三方库<code>PyVirtualDisplay</code>，该库可以在python程序中启动指定运行端口xvfb程序，并且可远程监听。</p>
+
+            </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
                 <a href="https://huaxiaobin.github.io/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">
-                  <h2 class="post-title">App反编译工具dex2jar、JD-GUI的使用</h2>
+                  <h3 class="post-title">
+                    App反编译工具dex2jar、JD-GUI的使用
+                  </h3>
                 </a>
-                <div class="post-date">
-                  2020-02-28
-                </div>
-                <div class="post-abstract">
-                  <p>如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。</p>
-
-                </div>
               </div>
-              
-                <a class="right" href="https://huaxiaobin.github.io/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">
-                  <div class="feature-container" style="background-image: url('https://huaxiaobin.github.io/post-images/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong.png')">
-                  </div>
-                </a>
-              
-            </article>
-          
+            
 
-          <div class="pagination-container">
-  
-  
-</div>
+            
+
+          </div>
 
         </div>
       </div>

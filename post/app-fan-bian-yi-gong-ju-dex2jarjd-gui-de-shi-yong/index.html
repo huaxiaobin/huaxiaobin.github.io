@@ -8,7 +8,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
-<link rel="shortcut icon" href="https://huaxiaobin.github.io/favicon.ico?v=1582823346668">
+<link rel="shortcut icon" href="https://huaxiaobin.github.io/favicon.ico?v=1582824323970">
 <link rel="stylesheet" href="https://huaxiaobin.github.io/styles/main.css">
 
 
@@ -32,7 +32,7 @@ dex2jar下载及安装
   <div class="top-container" data-aos="fade-right">
     <div class="top-header-container">
       <a class="site-title-container" href="https://huaxiaobin.github.io">
-        <img src="https://huaxiaobin.github.io/images/avatar.png?v=1582823346668" class="site-logo">
+        <img src="https://huaxiaobin.github.io/images/avatar.png?v=1582824323970" class="site-logo">
         <h1 class="site-title">HuaYunBin&#39;s Blog</h1>
       </a>
       <div class="menu-btn" @click="menuVisible = !menuVisible">
@@ -115,8 +115,8 @@ dex2jar下载及安装
 <h2 id="反编译">反编译</h2>
 <p>首先准备好你所需要编译的Apk文件；</p>
 <h3 id="通过dex2jar反编译apk得到jar文件">通过dex2jar反编译Apk得到jar文件</h3>
-<pre><code class="language-shell">cd dex2jar-2.x  //首先cd到dex2jar目录下
-sh d2j-dex2jar.sh xxx.apk  //执行shell脚本反编译你的Apk
+<pre><code class="language-shell">cd dex2jar-2.x  #首先cd到dex2jar目录下
+sh d2j-dex2jar.sh xxx.apk  #执行shell脚本反编译你的Apk
 </code></pre>
 <p>运行完毕后会在dex2jar目录下生成反编译后的jar文件<br>
 ps-1：执行d2j-dex2jar.sh这一步时，可能会报错，如下<br>
@@ -125,7 +125,8 @@ ps-1：执行d2j-dex2jar.sh这一步时，可能会报错，如下<br>
 <img src="https://huaxiaobin.github.io/post-images/1582821895545.png" alt="" loading="lazy"><br>
 ps-2：还有可能碰到如下错误<br>
 <img src="https://huaxiaobin.github.io/post-images/1582822068157.png" alt="" loading="lazy"><br>
-这是因为dex2jar版本较老引起得，需要去下载最新版（可能不好找，2.0版本以上）或者自行编译dex2jar源码，然后重新反编译apk既可。</p>
+这是因为dex2jar版本较老引起得，需要去下载最新版（可能不好找，2.0版本以上）或者自行编译dex2jar源码，然后重新反编译apk既可；<br>
+具体编译方法可看<a href="https://github.com/pxb1988/dex2jar/wiki/BuildFromSource">https://github.com/pxb1988/dex2jar/wiki/BuildFromSource</a></p>
 <h3 id="使用jd-gui软件查看app源码">使用JD-GUI软件查看App源码</h3>
 <p>直接拖动dex2jar生成的jar文件到JD-GUI中既可，如下：<br>
 <img src="https://huaxiaobin.github.io/post-images/1582823038881.png" alt="" loading="lazy"></p>
