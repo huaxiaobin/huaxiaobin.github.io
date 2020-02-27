@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://huaxiaobin.github.io</id>
     <title>HuaYunBin&apos;s Blog</title>
-    <updated>2020-02-27T15:48:12.670Z</updated>
+    <updated>2020-02-27T17:08:41.476Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://huaxiaobin.github.io"/>
     <link rel="self" href="https://huaxiaobin.github.io/atom.xml"/>
@@ -11,35 +11,37 @@
     <icon>https://huaxiaobin.github.io/favicon.ico</icon>
     <rights>All rights reserved 2020, HuaYunBin&apos;s Blog</rights>
     <entry>
-        <title type="html"><![CDATA[Hello Gridea]]></title>
-        <id>https://huaxiaobin.github.io/post/hello-gridea/</id>
-        <link href="https://huaxiaobin.github.io/post/hello-gridea/">
+        <title type="html"><![CDATA[App反编译工具dex2jar、JD-GUI的使用]]></title>
+        <id>https://huaxiaobin.github.io/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/</id>
+        <link href="https://huaxiaobin.github.io/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">
         </link>
-        <updated>2018-12-11T16:00:00.000Z</updated>
-        <summary type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <updated>2020-02-27T16:07:04.000Z</updated>
+        <summary type="html"><![CDATA[<p>如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。</p>
 ]]></summary>
-        <content type="html"><![CDATA[<p>👏  欢迎使用 <strong>Gridea</strong> ！<br>
-✍️  <strong>Gridea</strong> 一个静态博客写作客户端。你可以用它来记录你的生活、心情、知识、笔记、创意... ...</p>
+        <content type="html"><![CDATA[<p>如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。</p>
 <!-- more -->
-<p><a href="https://github.com/getgridea/gridea">Github</a><br>
-<a href="https://gridea.dev/">Gridea 主页</a><br>
-<a href="http://fehey.com/">示例网站</a></p>
-<h2 id="特性">特性👇</h2>
-<p>📝  你可以使用最酷的 <strong>Markdown</strong> 语法，进行快速创作</p>
-<p>🌉  你可以给文章配上精美的封面图和在文章任意位置插入图片</p>
-<p>🏷️  你可以对文章进行标签分组</p>
-<p>📋  你可以自定义菜单，甚至可以创建外部链接菜单</p>
-<p>💻  你可以在 <strong>Windows</strong>，<strong>MacOS</strong> 或 <strong>Linux</strong> 设备上使用此客户端</p>
-<p>🌎  你可以使用 <strong>𝖦𝗂𝗍𝗁𝗎𝖻 𝖯𝖺𝗀𝖾𝗌</strong> 或 <strong>Coding Pages</strong> 向世界展示，未来将支持更多平台</p>
-<p>💬  你可以进行简单的配置，接入 <a href="https://github.com/gitalk/gitalk">Gitalk</a> 或 <a href="https://github.com/SukkaW/DisqusJS">DisqusJS</a> 评论系统</p>
-<p>🇬🇧  你可以使用<strong>中文简体</strong>或<strong>英语</strong></p>
-<p>🌁  你可以任意使用应用内默认主题或任意第三方主题，强大的主题自定义能力</p>
-<p>🖥  你可以自定义源文件夹，利用 OneDrive、百度网盘、iCloud、Dropbox 等进行多设备同步</p>
-<p>🌱 当然 <strong>Gridea</strong> 还很年轻，有很多不足，但请相信，它会不停向前 🏃</p>
-<p>未来，它一定会成为你离不开的伙伴</p>
-<p>尽情发挥你的才华吧！</p>
-<p>😘 Enjoy~</p>
+<h2 id="准备工作">准备工作</h2>
+<h3 id="dex2jar下载及安装">dex2jar下载及安装</h3>
+<p>可以从<a href="https://sourceforge.net/projects/dex2jar/files/">https://sourceforge.net/projects/dex2jar/files/</a>下载dex2jar，然后解压既可。</p>
+<h3 id="jd-gui下载及安装">JD-GUI下载及安装</h3>
+<p>可以从<a href="http://java-decompiler.github.io/">http://java-decompiler.github.io/</a>下载JD-GUI工具。</p>
+<h2 id="反编译">反编译</h2>
+<p>首先准备好你所需要编译的Apk文件；</p>
+<h3 id="通过dex2jar反编译apk得到jar文件">通过dex2jar反编译Apk得到jar文件</h3>
+<pre><code class="language-shell">cd dex2jar-2.x  //首先cd到dex2jar目录下
+sh d2j-dex2jar.sh xxx.apk  //执行shell脚本反编译你的Apk
+</code></pre>
+<p>运行完毕后会在dex2jar目录下生成反编译后的jar文件<br>
+ps-1：执行d2j-dex2jar.sh这一步时，可能会报错，如下<br>
+<img src="https://huaxiaobin.github.io/post-images/1582821889509.png" alt="" loading="lazy"><br>
+这是因为内存溢出的问题，只需要修改d2j-dex2jar.sh脚本中最大所需内存既可，如下，默认为512m，这里改为了4096m<br>
+<img src="https://huaxiaobin.github.io/post-images/1582821895545.png" alt="" loading="lazy"><br>
+ps-2：还有可能碰到如下错误<br>
+<img src="https://huaxiaobin.github.io/post-images/1582822068157.png" alt="" loading="lazy"><br>
+这是因为dex2jar版本较老引起得，需要去下载最新版（可能不好找，2.0版本以上）或者自行编译dex2jar源码，然后重新反编译apk既可。</p>
+<h3 id="使用jd-gui软件查看app源码">使用JD-GUI软件查看App源码</h3>
+<p>直接拖动dex2jar生成的jar文件到JD-GUI中既可，如下：<br>
+<img src="https://huaxiaobin.github.io/post-images/1582823038881.png" alt="" loading="lazy"></p>
 ]]></content>
     </entry>
 </feed>

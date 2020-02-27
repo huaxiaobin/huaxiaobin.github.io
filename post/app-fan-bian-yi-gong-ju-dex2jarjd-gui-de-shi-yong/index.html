@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" >
 
-<title>关于 | HuaYunBin&#39;s Blog</title>
+<title>App反编译工具dex2jar、JD-GUI的使用 | HuaYunBin&#39;s Blog</title>
 
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 
@@ -18,23 +18,12 @@
 
 
 
-    <meta name="description" content="
-欢迎来到我的小站，很高兴遇见你！🤝
+    <meta name="description" content="如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。
 
-🏠 关于本站
-
-主要记录一些爬虫相关的教程和踩的坑
-
-👨‍💻 个人信息
-
-学历：本科/计算机科学与技术
-职位：爬虫开发工程师
-城市：杭州
-
-🖥 工作经历
-
-2018年7月~至今    杭州创..." />
-    <meta name="keywords" content="" />
+准备工作
+dex2jar下载及安装
+可以从https://sourceforge.net/pr..." />
+    <meta name="keywords" content="App反编译" />
   </head>
   <body>
     <div id="app" class="main">
@@ -109,48 +98,47 @@
       <div class="main-container">
         <div class="content-container" data-aos="fade-up">
           <div class="post-detail">
-            <h2 class="post-title">关于</h2>
-            <div class="post-date">2019-01-25</div>
+            <h2 class="post-title">App反编译工具dex2jar、JD-GUI的使用</h2>
+            <div class="post-date">2020-02-28</div>
+            
+              <div class="feature-container" style="background-image: url('https://huaxiaobin.github.io/post-images/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong.png')">
+              </div>
             
             <div class="post-content" v-pre>
-              <blockquote>
-<p>欢迎来到我的小站，很高兴遇见你！🤝</p>
-</blockquote>
-<h2 id="关于本站">🏠 关于本站</h2>
-<ul>
-<li>主要记录一些爬虫相关的教程和踩的坑</li>
-</ul>
-<h2 id="个人信息">👨‍💻 个人信息</h2>
-<ul>
-<li>学历：本科/计算机科学与技术</li>
-<li>职位：爬虫开发工程师</li>
-<li>城市：杭州</li>
-</ul>
-<h2 id="工作经历">🖥 工作经历</h2>
-<ul>
-<li>2018年7月~至今    杭州创因网络科技有限公司    爬虫开发工程师
-<ol>
-<li>负责淘宝、天猫、闲鱼等主流电商平台爬虫的开发与维护；</li>
-<li>爬虫监控系统的搭建；</li>
-</ol>
-</li>
-</ul>
-<h2 id="技能清单">⛹ 技能清单</h2>
-<ul>
-<li>主要使用Python，偶尔使用Java</li>
-<li>熟悉Scrapy、WebMagic等常用爬虫框架</li>
-<li>掌握正则表达式、Xpath 以及 CSS Selector 等数据解析提取方式；</li>
-<li>熟悉常用的反反爬虫策略，如伪造 headers、切换代理 ip、模拟登陆 puppeteer、js 解密等；</li>
-<li>掌握dex2jar、JD-GUI等工具对App进行反编译；</li>
-<li>掌握Xposed、Frida工具对App进行Hook，进行过淘宝、闲鱼等App的x-sign参数Hook；</li>
-</ul>
-<h2 id="联系方式">📬 联系方式</h2>
-<ul>
-<li>Email：Mr.HuaYunBin@gmail.com</li>
-<li>WeChat：hyb931452565</li>
-</ul>
+              <p>如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。</p>
+<!-- more -->
+<h2 id="准备工作">准备工作</h2>
+<h3 id="dex2jar下载及安装">dex2jar下载及安装</h3>
+<p>可以从<a href="https://sourceforge.net/projects/dex2jar/files/">https://sourceforge.net/projects/dex2jar/files/</a>下载dex2jar，然后解压既可。</p>
+<h3 id="jd-gui下载及安装">JD-GUI下载及安装</h3>
+<p>可以从<a href="http://java-decompiler.github.io/">http://java-decompiler.github.io/</a>下载JD-GUI工具。</p>
+<h2 id="反编译">反编译</h2>
+<p>首先准备好你所需要编译的Apk文件；</p>
+<h3 id="通过dex2jar反编译apk得到jar文件">通过dex2jar反编译Apk得到jar文件</h3>
+<pre><code class="language-shell">cd dex2jar-2.x  //首先cd到dex2jar目录下
+sh d2j-dex2jar.sh xxx.apk  //执行shell脚本反编译你的Apk
+</code></pre>
+<p>运行完毕后会在dex2jar目录下生成反编译后的jar文件<br>
+ps-1：执行d2j-dex2jar.sh这一步时，可能会报错，如下<br>
+<img src="https://huaxiaobin.github.io/post-images/1582821889509.png" alt="" loading="lazy"><br>
+这是因为内存溢出的问题，只需要修改d2j-dex2jar.sh脚本中最大所需内存既可，如下，默认为512m，这里改为了4096m<br>
+<img src="https://huaxiaobin.github.io/post-images/1582821895545.png" alt="" loading="lazy"><br>
+ps-2：还有可能碰到如下错误<br>
+<img src="https://huaxiaobin.github.io/post-images/1582822068157.png" alt="" loading="lazy"><br>
+这是因为dex2jar版本较老引起得，需要去下载最新版（可能不好找，2.0版本以上）或者自行编译dex2jar源码，然后重新反编译apk既可。</p>
+<h3 id="使用jd-gui软件查看app源码">使用JD-GUI软件查看App源码</h3>
+<p>直接拖动dex2jar生成的jar文件到JD-GUI中既可，如下：<br>
+<img src="https://huaxiaobin.github.io/post-images/1582823038881.png" alt="" loading="lazy"></p>
 
             </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://huaxiaobin.github.io/tag/jknfsv-DS/" class="tag">
+                    App反编译
+                  </a>
+                
+              </div>
             
             
 
