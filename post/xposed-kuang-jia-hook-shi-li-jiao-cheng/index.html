@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" >
+
+<title>Xposed框架Hook Demo实例教程 | HuaYunBin&#39;s Blog</title>
+
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+<link rel="shortcut icon" href="https://huaxiaobin.github.io/favicon.ico?v=1584547997875">
+<link rel="stylesheet" href="https://huaxiaobin.github.io/styles/main.css">
+
+
+
+<link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+
+
+    <meta name="description" content="
+Xposed是GitHub上rovo89大神设计的一个针对Android平台的动态劫持项目，通过替换/system/bin/app_process程序控制zygote进程，使得app_process在启动过程中会加载XposedBridg..." />
+    <meta name="keywords" content="Xposed" />
+  </head>
+  <body>
+    <div id="app" class="main">
+
+      <div class="sidebar" :class="{ 'full-height': menuVisible }">
+  <div class="top-container" data-aos="fade-right">
+    <div class="top-header-container">
+      <a class="site-title-container" href="https://huaxiaobin.github.io">
+        <img src="https://huaxiaobin.github.io/images/avatar.png?v=1584547997875" class="site-logo">
+        <h1 class="site-title">HuaYunBin&#39;s Blog</h1>
+      </a>
+      <div class="menu-btn" @click="menuVisible = !menuVisible">
+        <div class="line"></div>
+      </div>
+    </div>
+    <div>
+      
+        
+          <a href="/" class="site-nav">
+            首页
+          </a>
+        
+      
+        
+          <a href="/archives" class="site-nav">
+            归档
+          </a>
+        
+      
+        
+          <a href="/tags" class="site-nav">
+            标签
+          </a>
+        
+      
+        
+          <a href="/post/about" class="site-nav">
+            关于
+          </a>
+        
+      
+    </div>
+  </div>
+  <div class="bottom-container" data-aos="flip-up" data-aos-offset="0">
+    <div class="social-container">
+      
+        
+          <a class="social-link" href="https://github.com/huaxiaobin" target="_blank">
+            <i class="fab fa-github"></i>
+          </a>
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    </div>
+    <div class="site-description">
+      Read(); Think(); Try(); Repeat();
+    </div>
+    <div class="site-footer">
+      Powered by <a target="_blank" href="https://gridea.dev/">Gridea</a> | <a class="rss" href="https://huaxiaobin.github.io/atom.xml" target="_blank">RSS</a>
+    </div>
+  </div>
+</div>
+
+
+      <div class="main-container">
+        <div class="content-container" data-aos="fade-up">
+          <div class="post-detail">
+            <h2 class="post-title">Xposed框架Hook Demo实例教程</h2>
+            <div class="post-date">2020-03-10</div>
+            
+              <div class="feature-container" style="background-image: url('https://huaxiaobin.github.io/post-images/xposed-kuang-jia-hook-shi-li-jiao-cheng.png')">
+              </div>
+            
+            <div class="post-content" v-pre>
+              <blockquote>
+<p><code>Xposed</code>是GitHub上rovo89大神设计的一个针对Android平台的动态劫持项目，通过替换/system/bin/app_process程序控制zygote进程，使得app_process在启动过程中会加载XposedBridge.jar这个jar包，从而完成对Zygote进程及其创建的Dalvik虚拟机的劫持。</p>
+</blockquote>
+<!-- more -->
+<p>Xposed模块本质上也是一个Android App程序，完成一个Xposed模块需要有以下几步：</p>
+<ul>
+<li>创建一个Android App程序，并让Xposed知道这个程序是一个Xposed模块；</li>
+<li>App程序中导入Xposed API的Jar包；</li>
+<li>编写具体Hook代码；</li>
+<li>添加入口，使Xposed能知道这个Xposed模块的Hook类入口；</li>
+</ul>
+<h1 id="一-创建app程序并让xposed认识你">一、创建App程序，并让Xposed认识你</h1>
+<p>1、打开AndroidStudio，建立一个工程。<br>
+<img src="https://huaxiaobin.github.io/post-images/1584525338041.png" alt="" loading="lazy"><br>
+<img src="https://huaxiaobin.github.io/post-images/1584525346792.png" alt="" loading="lazy"><br>
+2、打开AndroidManifest.xml文件，在文件中添加如下几行代码。</p>
+<pre><code class="language-xml">&lt;meta-data
+    android:name=&quot;xposeddescription&quot;
+    android:value=&quot;Hook Demo程序&quot; /&gt;
+&lt;meta-data
+    android:name=&quot;xposedminversion&quot;
+    android:value=&quot;53&quot; /&gt;
+&lt;meta-data
+    android:name=&quot;xposedmodule&quot;
+    android:value=&quot;true&quot; /&gt;
+</code></pre>
+<p><img src="https://huaxiaobin.github.io/post-images/1584525775874.png" alt="" loading="lazy"><br>
+3、完成以上两步后，就可以在手机上运行测试一下了。把手机连到电脑上，并确定能在AndroidStudio上看到你的手机（看不到就检查下是不是adb的问题），这里我使用了网易MuMu模拟器来代替真机。点击运行，在手机上跳出程序后，打开Xposed软件的模块界面，能看到下面这个，就说明Xposed已经识别到你写的Xposed模块了（<strong>记得把勾选上，开启该模块</strong>）。<br>
+<img src="https://huaxiaobin.github.io/post-images/1584544027373.png" alt="" loading="lazy"></p>
+<h1 id="二-让你在app程序中能使用xposed-api">二、让你在App程序中能使用Xposed API</h1>
+<p>1、打开build.gradle(Module: app)文件，在dependencies中添加如下两行代码，添加后，记得点击右上角的Sync Now按钮，这样我们就可以在我们App程序中使用Xposed的API了。</p>
+<pre><code>compileOnly 'de.robv.android.xposed:api:82'
+compileOnly 'de.robv.android.xposed:api:82:sources'
+</code></pre>
+<figure data-type="image" tabindex="1"><img src="https://huaxiaobin.github.io/post-images/1584544629871.png" alt="" loading="lazy"></figure>
+<h1 id="三-编写具体hook代码">三、编写具体Hook代码</h1>
+<p>1、在编写Hook代码之前，我们首先先完成一个测试的界面：<br>
+在activity_main.xml文件中，添加一个按钮，设按钮id为btn；<br>
+<img src="https://huaxiaobin.github.io/post-images/1584545266889.png" alt="" loading="lazy"><br>
+在MainActivity.java文件中获取该按钮，并绑定点击事件，点击后弹出提示框，内容为方法toastMsg()返回的字符串“我未被劫持”。<br>
+<img src="https://huaxiaobin.github.io/post-images/1584545359143.png" alt="" loading="lazy"><br>
+重新运行App，点击按钮后效果如下：<br>
+<img src="https://huaxiaobin.github.io/post-images/1584545465592.png" alt="" loading="lazy"><br>
+2、编写具体Hook代码，这里我们Hook要实现的最终效果是使点击按钮后弹出的提示框内容变为“你被劫持啦”。</p>
+<ul>
+<li>在MainActivity同级目录下新建HookTest.java文件；</li>
+<li>HookTest类实现IXposedHookLoadPackage接口，并重写handleLoadPackage方法；</li>
+<li>加判断，当Hook到你需要的应用时，加载需要Hook的类，其中“com.hyb.hookdemo”为目标应用的包名，“com.hyb.hookdemo.MainActivity”为需要Hook的方法的类名，“toastMsg”为需要Hook的方法名；</li>
+<li>调用XposedHelpers的findAndHookMethod()方法，方法的第三个参数new XC_MethodHook()为具体的Hook处理逻辑，XC_MethodHook中重写beforeHookedMethod()和afterHookedMethod()两个方法，其中beforeHookedMethod()为toastMsg()方法执行前执行，afterHookedMethod()为toastMsg()方法执行后执行；</li>
+<li>在afterHookedMethod()中修改toastMsg()方法的返回值；</li>
+</ul>
+<p>具体实现代码如下：</p>
+<pre><code class="language-java">public class HookTest implements IXposedHookLoadPackage {
+
+    @Override
+    public void handleLoadPackage(XC_LoadPackage.LoadPackageParam lpparam) throws Throwable {
+        String hookPackageName = &quot;com.hyb.hookdemo&quot;;
+        if (hookPackageName.equals(lpparam.packageName)) {
+            XposedBridge.log(&quot;已成功Hook到HookDemo应用&quot;);
+            Class clazz = lpparam.classLoader.loadClass(&quot;com.hyb.hookdemo.MainActivity&quot;);
+            XposedHelpers.findAndHookMethod(clazz, &quot;toastMsg&quot;, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(XC_MethodHook.MethodHookParam param) throws Throwable {
+                    super.beforeHookedMethod(param);
+                }
+
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    param.setResult(&quot;你被劫持啦&quot;);
+                }
+            });
+        }
+    }
+}
+</code></pre>
+<figure data-type="image" tabindex="2"><img src="https://huaxiaobin.github.io/post-images/1584547014109.png" alt="" loading="lazy"></figure>
+<h1 id="四-添加入口让xposed知道你的hook模块入口">四、添加入口，让Xposed知道你的Hook模块入口</h1>
+<p>1、AndroidStudio左边目录切换到Project目录，在app/src/main上右键选择New-&gt;Folder-&gt;Assets Folder，点击Finish新建。<br>
+<img src="https://huaxiaobin.github.io/post-images/1584547671040.png" alt="" loading="lazy"><br>
+2、在assets文件夹上新建文件（New-&gt;File），命名为xposed_init，在文件中添加一行文本“com.hyb.hookdemo.HookTest”，该文本为你具体Hook代码文件的完整路径。这样Xposed就可以通过读取xposed_init文件知道你Hook模块的入口在哪啦。<br>
+<img src="https://huaxiaobin.github.io/post-images/1584547743775.png" alt="" loading="lazy"></p>
+<h1 id="五-最终效果">五、最终效果</h1>
+<p>至此，你的Hook模块就完成啦，重新编译运行App，<strong>重启设备（每次修改Hook代码后都记得重启手机）</strong>，点击按钮效果如下：<br>
+<img src="https://huaxiaobin.github.io/post-images/1584547950576.png" alt="" loading="lazy"></p>
+
+            </div>
+            
+              <div class="tag-container">
+                
+                  <a href="https://huaxiaobin.github.io/tag/9e05T8-AC/" class="tag">
+                    Xposed
+                  </a>
+                
+              </div>
+            
+            
+              <div class="next-post">
+                <div class="next">下一篇</div>
+                <a href="https://huaxiaobin.github.io/post/linux-xu-ni-ping-mu-xvfb-de-jie-shao/">
+                  <h3 class="post-title">
+                    Linux虚拟屏幕Xvfb的介绍
+                  </h3>
+                </a>
+              </div>
+            
+
+            
+
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script type="application/javascript">
+
+AOS.init();
+
+var app = new Vue({
+  el: '#app',
+  data: {
+    menuVisible: false,
+  },
+})
+
+</script>
+
+
+  <script src="https://cdn.bootcss.com/highlight.js/9.12.0/highlight.min.js"></script>
+  <script>
+    hljs.initHighlightingOnLoad()
+  </script>
+
+
+
+
+
+  </body>
+</html>
