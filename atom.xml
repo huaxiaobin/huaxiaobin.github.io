@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hyb.life</id>
     <title>HuaYunBin&apos;s Blog</title>
-    <updated>2020-03-20T01:06:34.851Z</updated>
+    <updated>2020-03-24T07:17:24.039Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hyb.life"/>
     <link rel="self" href="https://hyb.life/atom.xml"/>
@@ -10,6 +10,39 @@
     <logo>https://hyb.life/images/avatar.png</logo>
     <icon>https://hyb.life/favicon.ico</icon>
     <rights>All rights reserved 2020, HuaYunBin&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[App接口加密参数破解流程介绍]]></title>
+        <id>https://hyb.life/post/app-jia-mi-hermesagent/</id>
+        <link href="https://hyb.life/post/app-jia-mi-hermesagent/">
+        </link>
+        <updated>2020-03-24T03:34:59.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p>如今，随着各大公司对数据安全愈发重视，App数据的爬取也变得越来越难。大多数主流App都对自己的数据接口进行了参数的加密，如淘系App的X-sign、抖音系App的X-grogon、拼多多App的anti-token等等，如果请求的时候不携带加密参数，就无法爬取数据。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p>如今，随着各大公司对数据安全愈发重视，App数据的爬取也变得越来越难。大多数主流App都对自己的数据接口进行了参数的加密，如淘系App的X-sign、抖音系App的X-grogon、拼多多App的anti-token等等，如果请求的时候不携带加密参数，就无法爬取数据。</p>
+</blockquote>
+<!-- more -->
+<p>这就需要我们对加密函数进行逆向破解，一般流程如下：</p>
+<ol>
+<li>首先你需要下载App对应的APK文件，对App进行反编译（可见我写的<a href="/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">App反编译工具使用教程</a>）；</li>
+<li>然后你需要找到生成加密参数的函数，这一步往往需要花费较多的时间，很多App都进行了混淆；</li>
+<li>对加密函数进行逆向破解，实现自己的加密函数，供数据爬取的时候调用。</li>
+</ol>
+<p>上面三步，就是一般情况下破解加密函数的流程。然而，往往你会卡在第三步上，你会发现在加密函数中，它又调用了某几个不知名的函数，而你在反编译后的Java代码中还找不到这几个函数的具体实现。这种情况十分多见，如淘宝App加密参数X-sign的生成，这几个不知名的函数往往是隐藏在了so文件中，它直接调用了so文件中的具体实现函数。so文件的破解难度往往很大，加密函数很难找到，就算找到了，也很难分析逆向出来。</p>
+<p>这一步也卡了我很久，最后通过参考网上大神们的文章，我知道了一种新的破解思路：</p>
+<ol>
+<li>首先和一般破解流程一样，你需要对App进行反编译，然后找到生成加密参数的函数；</li>
+<li>编写Xposed模块，Hook到该加密函数（可见我写的<a href="/post/xposed-kuang-jia-hook-shi-li-jiao-cheng/">Hook教程</a>）；</li>
+<li>Hook到后，把加密函数及实例化后的类对象保存到系统服务中；</li>
+<li>在Xposed模块中搭建一个HTTP服务器；</li>
+<li>实现一个接口，调用该接口后，通过Java中的反射调用保存到系统服务中的加密函数，返回加密后的参数；</li>
+<li>爬虫远程调用该Xposed模块中的接口，实现实时获取加密参数。</li>
+</ol>
+<p>ps：这一种破解思路，难点在于第三步，如何保存加密函数及实例化后的类对象（因为你的Xposed模块和目标App是两个不用的App，无法实现相互通信），这里可看我的后续文章。</p>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Xposed框架Hook Demo实例教程]]></title>
         <id>https://hyb.life/post/xposed-kuang-jia-hook-shi-li-jiao-cheng/</id>
