@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>App反编译工具dex2jar、JD-GUI的使用 | HuaYunBin&#39;s Blog</title>
-<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1585554360941">
+<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1585561286982">
 <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="https://hyb.life/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -115,16 +115,16 @@ sh d2j-dex2jar.sh xxx.apk  #执行shell脚本反编译你的Apk
 </code></pre>
 <p>运行完毕后会在dex2jar目录下生成反编译后的jar文件<br>
 ps-1：执行d2j-dex2jar.sh这一步时，可能会报错，如下<br>
-<img src="https://ae01.alicdn.com/kf/H33523e9523784766be172e6160457472h.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585559890304.png" alt="" loading="lazy"><br>
 这是因为内存溢出的问题，只需要修改d2j-dex2jar.sh脚本中最大所需内存既可，如下，默认为512m，这里改为了4096m<br>
-<img src="https://ae01.alicdn.com/kf/H7bdbfc11968d411caac7e889883a036b4.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585559904598.png" alt="" loading="lazy"><br>
 ps-2：还有可能碰到如下错误<br>
-<img src="https://ae01.alicdn.com/kf/H7e8f71f1d3384ab082c041179fd74239R.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585559912686.png" alt="" loading="lazy"><br>
 这是因为dex2jar版本较老引起得，需要去下载最新版（可能不好找，2.0版本以上）或者自行编译dex2jar源码，然后重新反编译apk既可；<br>
 具体编译方法可看<a href="https://github.com/pxb1988/dex2jar/wiki/BuildFromSource">https://github.com/pxb1988/dex2jar/wiki/BuildFromSource</a></p>
 <h3 id="使用jd-gui软件查看app源码">使用JD-GUI软件查看App源码</h3>
 <p>直接拖动dex2jar生成的jar文件到JD-GUI中既可，如下：<br>
-<img src="https://ae01.alicdn.com/kf/Hc9ded0ba35c14889855e3e732179958e5.jpg" alt="" loading="lazy"></p>
+<img src="https://hyb.life/post-images/1585559921967.png" alt="" loading="lazy"></p>
 
                 </div>
             </article>

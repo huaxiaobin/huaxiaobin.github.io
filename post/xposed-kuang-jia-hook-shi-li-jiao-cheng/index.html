@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Xposed框架Hook Demo实例教程 | HuaYunBin&#39;s Blog</title>
-<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1585554360941">
+<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1585561286982">
 <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="https://hyb.life/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -113,8 +113,8 @@
 </ul>
 <h1 id="一-创建app程序并让xposed认识你">一、创建App程序，并让Xposed认识你</h1>
 <p>1、打开AndroidStudio，建立一个工程。<br>
-<img src="https://ae01.alicdn.com/kf/H9a02149374aa40819ac302b29e0f558as.jpg" alt="" loading="lazy"><br>
-<img src="https://ae01.alicdn.com/kf/H368fe592896c4f0b821343767a74e519t.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560046502.png" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560053844.png" alt="" loading="lazy"><br>
 2、打开AndroidManifest.xml文件，在文件中添加如下几行代码。</p>
 <pre><code class="language-xml">&lt;meta-data
     android:name=&quot;xposeddescription&quot;
@@ -126,23 +126,23 @@
     android:name=&quot;xposedmodule&quot;
     android:value=&quot;true&quot; /&gt;
 </code></pre>
-<p><img src="https://ae01.alicdn.com/kf/H3c137f1fc18e48adb81843806762d6f2L.jpg" alt="" loading="lazy"><br>
+<p><img src="https://hyb.life/post-images/1585560061529.png" alt="" loading="lazy"><br>
 3、完成以上两步后，就可以在手机上运行测试一下了。把手机连到电脑上，并确定能在AndroidStudio上看到你的手机（看不到就检查下是不是adb的问题），这里我使用了网易MuMu模拟器来代替真机。点击运行，在手机上跳出程序后，打开Xposed软件的模块界面，能看到下面这个，就说明Xposed已经识别到你写的Xposed模块了（<strong>记得把勾选上，开启该模块</strong>）。<br>
-<img src="https://ae01.alicdn.com/kf/H90105fa1befd4da2a97f4be5ab7ebce2r.jpg" alt="" loading="lazy"></p>
+<img src="https://hyb.life/post-images/1585560069163.png" alt="" loading="lazy"></p>
 <h1 id="二-让你在app程序中能使用xposed-api">二、让你在App程序中能使用Xposed API</h1>
 <p>1、打开build.gradle(Module: app)文件，在dependencies中添加如下两行代码，添加后，记得点击右上角的Sync Now按钮，这样我们就可以在我们App程序中使用Xposed的API了。</p>
 <pre><code>compileOnly 'de.robv.android.xposed:api:82'
 compileOnly 'de.robv.android.xposed:api:82:sources'
 </code></pre>
-<figure data-type="image" tabindex="1"><img src="https://ae01.alicdn.com/kf/H0ac4ad34260748248966ac84b7325e3cY.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="1"><img src="https://hyb.life/post-images/1585560076616.png" alt="" loading="lazy"></figure>
 <h1 id="三-编写具体hook代码">三、编写具体Hook代码</h1>
 <p>1、在编写Hook代码之前，我们首先先完成一个测试的界面：<br>
 在activity_main.xml文件中，添加一个按钮，设按钮id为btn；<br>
-<img src="https://ae01.alicdn.com/kf/H7ad15e193e534d3fa9ec5d9df0ef0004V.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560084479.png" alt="" loading="lazy"><br>
 在MainActivity.java文件中获取该按钮，并绑定点击事件，点击后弹出提示框，内容为方法toastMsg()返回的字符串“我未被劫持”。<br>
-<img src="https://ae01.alicdn.com/kf/H23d80605054e42f4a621df2bf79e480dn.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560092931.png" alt="" loading="lazy"><br>
 重新运行App，点击按钮后效果如下：<br>
-<img src="https://ae01.alicdn.com/kf/H801a070fb86140f8bdc51188347e973c1.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560099068.png" alt="" loading="lazy"><br>
 2、编写具体Hook代码，这里我们Hook要实现的最终效果是使点击按钮后弹出的提示框内容变为“你被劫持啦”。</p>
 <ul>
 <li>在MainActivity同级目录下新建HookTest.java文件；</li>
@@ -175,15 +175,15 @@ compileOnly 'de.robv.android.xposed:api:82:sources'
     }
 }
 </code></pre>
-<figure data-type="image" tabindex="2"><img src="https://ae01.alicdn.com/kf/Hf932671fe6fa43acb2a3ef13867845d9a.jpg" alt="" loading="lazy"></figure>
+<figure data-type="image" tabindex="2"><img src="https://hyb.life/post-images/1585560107904.png" alt="" loading="lazy"></figure>
 <h1 id="四-添加入口让xposed知道你的hook模块入口">四、添加入口，让Xposed知道你的Hook模块入口</h1>
 <p>1、AndroidStudio左边目录切换到Project目录，在app/src/main上右键选择New-&gt;Folder-&gt;Assets Folder，点击Finish新建。<br>
-<img src="https://ae01.alicdn.com/kf/H5f7cde1a555849ee95656f6dbd7dcd25f.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560114304.png" alt="" loading="lazy"><br>
 2、在assets文件夹上新建文件（New-&gt;File），命名为xposed_init，在文件中添加一行文本“com.hyb.hookdemo.HookTest”，该文本为你具体Hook代码文件的完整路径。这样Xposed就可以通过读取xposed_init文件知道你Hook模块的入口在哪啦。<br>
-<img src="https://ae01.alicdn.com/kf/Hb45c470b8c674de0976d6b703c67fa77B.jpg" alt="" loading="lazy"></p>
+<img src="https://hyb.life/post-images/1585560121010.png" alt="" loading="lazy"></p>
 <h1 id="五-最终效果">五、最终效果</h1>
 <p>至此，你的Hook模块就完成啦，重新编译运行App，<strong>重启设备（每次修改Hook代码后都记得重启手机）</strong>，点击按钮效果如下：<br>
-<img src="https://ae01.alicdn.com/kf/Hd9dd09c2f3dd4a0789ff2553d40545b0j.jpg" alt="" loading="lazy"><br>
+<img src="https://hyb.life/post-images/1585560128259.png" alt="" loading="lazy"><br>
 本次教程就到这里结束啦，最终代码已上传GitHub：<a href="https://github.com/huaxiaobin/HookDemo">https://github.com/huaxiaobin/HookDemo</a></p>
 
                 </div>
