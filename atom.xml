@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hyb.life</id>
     <title>HuaYunBin&apos;s Blog</title>
-    <updated>2020-04-07T14:15:40.618Z</updated>
+    <updated>2020-04-07T16:03:59.854Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hyb.life"/>
     <link rel="self" href="https://hyb.life/atom.xml"/>
@@ -25,7 +25,8 @@
 </blockquote>
 <!-- more -->
 <h1 id="一-原理">一、原理</h1>
-<p>agent本身启动了一个service，agent插件模块将会自动注册钩子函数，并且和service通信。Android设备外部请求可以通过暴露在agent上面的一个http端口，和agent通信，然后agent和目标apkRPC。 如此实现外部请求到任何一个app的任何功能的外部调用。</p>
+<p>agent本身启动了一个service，agent插件模块将会自动注册钩子函数，并且和service通信。Android设备外部请求可以通过暴露在agent上面的一个http端口，和agent通信，然后agent和目标apkRPC。 如此实现外部请求到任何一个app的任何功能的外部调用。<br>
+<img src="https://hyb.life/post-images/1586275027152.png" alt="" loading="lazy"></p>
 <h1 id="二-使用教程">二、使用教程</h1>
 <h3 id="21-安装">2.1 安装</h3>
 <p>下载hermesagent项目源码，编译后安装到手机上，然后在Xposed模块界面开启hermesagent模块，重启手机既可。</p>

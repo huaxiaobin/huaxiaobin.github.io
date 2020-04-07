@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>HermesAgent群控系统使用教程 | HuaYunBin&#39;s Blog</title>
-<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1586268935254">
+<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1586275029580">
 <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="https://hyb.life/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -94,6 +94,10 @@
                         · 2020-04-07 ·
                     </time>
                     
+                        <a href="https://hyb.life/tag/9e05T8-AC/" class="post-tags">
+                            # Xposed
+                        </a>
+                    
                 </div>
                 <div class="post-content">
                     <blockquote>
@@ -101,7 +105,8 @@
 </blockquote>
 <!-- more -->
 <h1 id="一-原理">一、原理</h1>
-<p>agent本身启动了一个service，agent插件模块将会自动注册钩子函数，并且和service通信。Android设备外部请求可以通过暴露在agent上面的一个http端口，和agent通信，然后agent和目标apkRPC。 如此实现外部请求到任何一个app的任何功能的外部调用。</p>
+<p>agent本身启动了一个service，agent插件模块将会自动注册钩子函数，并且和service通信。Android设备外部请求可以通过暴露在agent上面的一个http端口，和agent通信，然后agent和目标apkRPC。 如此实现外部请求到任何一个app的任何功能的外部调用。<br>
+<img src="https://hyb.life/post-images/1586275027152.png" alt="" loading="lazy"></p>
 <h1 id="二-使用教程">二、使用教程</h1>
 <h3 id="21-安装">2.1 安装</h3>
 <p>下载hermesagent项目源码，编译后安装到手机上，然后在Xposed模块界面开启hermesagent模块，重启手机既可。</p>
