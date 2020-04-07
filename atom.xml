@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hyb.life</id>
     <title>HuaYunBin&apos;s Blog</title>
-    <updated>2020-03-30T09:41:34.670Z</updated>
+    <updated>2020-04-07T14:15:40.618Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hyb.life"/>
     <link rel="self" href="https://hyb.life/atom.xml"/>
@@ -10,6 +10,119 @@
     <logo>https://hyb.life/images/avatar.png</logo>
     <icon>https://hyb.life/favicon.ico</icon>
     <rights>All rights reserved 2020, HuaYunBin&apos;s Blog</rights>
+    <entry>
+        <title type="html"><![CDATA[HermesAgent群控系统使用教程]]></title>
+        <id>https://hyb.life/post/hermesagent-jie-shao-ji-yu-xposedrpc-shi-xian-fang-fa-ji-bie-de-qun-kong/</id>
+        <link href="https://hyb.life/post/hermesagent-jie-shao-ji-yu-xposedrpc-shi-xian-fang-fa-ji-bie-de-qun-kong/">
+        </link>
+        <updated>2020-04-07T09:36:24.000Z</updated>
+        <summary type="html"><![CDATA[<blockquote>
+<p><a href="https://gitee.com/virjar/hermesagent/tree/master">HermesAgent</a>是virjar大神写的一个Android群控系统，基于xposed+RPC实现方法级别的群控。HermesAgent是hermes系统的客户端模块，他是种植在手机里面的一个agent，同时也是一个xposed的模块插件。</p>
+</blockquote>
+]]></summary>
+        <content type="html"><![CDATA[<blockquote>
+<p><a href="https://gitee.com/virjar/hermesagent/tree/master">HermesAgent</a>是virjar大神写的一个Android群控系统，基于xposed+RPC实现方法级别的群控。HermesAgent是hermes系统的客户端模块，他是种植在手机里面的一个agent，同时也是一个xposed的模块插件。</p>
+</blockquote>
+<!-- more -->
+<h1 id="一-原理">一、原理</h1>
+<p>agent本身启动了一个service，agent插件模块将会自动注册钩子函数，并且和service通信。Android设备外部请求可以通过暴露在agent上面的一个http端口，和agent通信，然后agent和目标apkRPC。 如此实现外部请求到任何一个app的任何功能的外部调用。</p>
+<h1 id="二-使用教程">二、使用教程</h1>
+<h3 id="21-安装">2.1 安装</h3>
+<p>下载hermesagent项目源码，编译后安装到手机上，然后在Xposed模块界面开启hermesagent模块，重启手机既可。</p>
+<h3 id="22-代码编写">2.2 代码编写</h3>
+<p><strong>本教程以调用我前面写的Xposed Hook教程《<a href="/post/xposed-kuang-jia-hook-shi-li-jiao-cheng/">Xposed框架Hook Demo实例教程</a>》中MainActivity类中的toastMsg方法为例</strong><br>
+在hookagent包下新建类TestAgent，实现AgentCallback接口，并重写targetPackageName、needHook、invoke、onXposedHotLoad四个方法。</p>
+<ul>
+<li>targetPackageName方法返回目标APK包名，此处为&quot;com.hyb.hookdemo&quot;；</li>
+<li>needHook方法返回一个boolean类型，一个app可能有多个进程，当进程为你需要hook的进程时，返回True；</li>
+<li>invoke方法为远程调用时执行的方法，可根据你请求中传入的参数反射调用你hook到的目标方法，反正方法的执行结果；</li>
+<li>onXposedHotLoad方法内部可编写具体的hook代码，可对目标方法进行hook，并存储方法对象和类对象，以便invoke方法中调用；</li>
+</ul>
+<p><strong>具体代码见文章最后。</strong></p>
+<h3 id="23-测试">2.3 测试</h3>
+<ul>
+<li>代码编写完毕后，首先需重新编译安装到手机并重启；</li>
+<li>重启后，hermesagent程序会自动打开（<strong>如无法自动打开，请检查手机自启动权限</strong>），并且还会自动打开HookDemo程序；</li>
+<li>通过浏览器访问app所在ip的5597端口，查看服务列表；</li>
+<li>通过invoke接口，调用服务api，此处地址为http://127.0.0.1:5597/invoke?invoke_package=com.hyb.hookdemo，执行后返回如下界面就代码调用成功：<br>
+<img src="https://hyb.life/post-images/1586268710387.png" alt="" loading="lazy"></li>
+</ul>
+<p>ps：如果调用后，返回异常，则可能是未hook到方法导致方法对象为空，你需要现在HookDemo程序中点击按钮调用一次，使Xposed能Hook到方法并保存方法。</p>
+<h3 id="三-最终代码">三、最终代码</h3>
+<pre><code class="language-java">package com.virjar.hermes.hermesagent.hookagent;
+
+import com.virjar.hermes.hermesagent.aidl.InvokeRequest;
+import com.virjar.hermes.hermesagent.aidl.InvokeResult;
+import com.virjar.hermes.hermesagent.plugin.AgentCallback;
+import com.virjar.hermes.hermesagent.plugin.SharedObject;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
+
+/**
+ * HookDemo Test
+ *
+ * @author HuaYunBin
+ */
+public class TestAgent implements AgentCallback {
+
+    private Object toastMsgMethodObject;
+    private Method toastMsgMethod;
+
+    @Override
+    public String targetPackageName() {
+        return &quot;com.hyb.hookdemo&quot;;
+    }
+
+    @Override
+    public boolean needHook(XC_LoadPackage.LoadPackageParam loadPackageParam) {
+        return StringUtils.equalsIgnoreCase(loadPackageParam.processName, &quot;com.hyb.hookdemo&quot;);
+    }
+
+    @Override
+    public InvokeResult invoke(InvokeRequest invokeRequest) {
+        String returnMsg = null;
+        try {
+            returnMsg = (String) toastMsgMethod.invoke(toastMsgMethodObject);
+        } catch (IllegalAccessException | InvocationTargetException e) {
+            e.printStackTrace();
+        }
+        return InvokeResult.success(returnMsg, SharedObject.context);
+    }
+
+    @Override
+    public void onXposedHotLoad() {
+        ClassLoader classLoader = SharedObject.loadPackageParam.classLoader;
+        try {
+            Class clazz = classLoader.loadClass(&quot;com.hyb.hookdemo.MainActivity&quot;);
+            XposedHelpers.findAndHookMethod(clazz, &quot;toastMsg&quot;, new XC_MethodHook() {
+
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    super.beforeHookedMethod(param);
+                }
+
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    super.afterHookedMethod(param);
+                    toastMsgMethodObject = param.thisObject;
+                    toastMsgMethod = (Method) param.method;
+                }
+            });
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+]]></content>
+    </entry>
     <entry>
         <title type="html"><![CDATA[App接口加密参数破解流程介绍]]></title>
         <id>https://hyb.life/post/app-jia-mi-hermesagent/</id>
