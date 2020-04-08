@@ -1,0 +1,352 @@
+<html>
+<head>
+    <meta charset="utf-8"/>
+<meta name="description" content=""/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>闲鱼App加密参数x-sign生成教程 | HuaYunBin&#39;s Blog</title>
+<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1586315207654">
+<link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
+<link rel="stylesheet" href="https://hyb.life/styles/main.css">
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/highlight.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dockerfile.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/dart.min.js"></script>
+<script src="https://cdn.bootcss.com/highlight.js/9.15.10/languages/go.min.js"></script>
+<script src="https://cdn.bootcss.com/moment.js/2.23.0/moment.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+
+<!-- DEMO JS -->
+<script src="media/scripts/index.js"></script>
+
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.10.0/katex.min.css">
+</head>
+<body>
+<div class="main gt-bg-theme-color-first">
+    <nav class="navbar navbar-expand-lg">
+    <div class="navbar-brand">
+        <img class="user-avatar" src="/images/avatar.png" alt="头像">
+        <div class="site-name gt-c-content-color-first">
+            HuaYunBin&#39;s Blog
+        </div>
+    </div>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <i class="fas fa-bars gt-c-content-color-first" style="font-size: 18px"></i>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="navbar-nav mr-auto" style="text-align: center">
+            
+                <div class="nav-item">
+                    
+                        <a href="/" class="menu gt-a-link">
+                            首页
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/archives" class="menu gt-a-link">
+                            归档
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/tags" class="menu gt-a-link">
+                            标签
+                        </a>
+                    
+                </div>
+            
+                <div class="nav-item">
+                    
+                        <a href="/post/about" class="menu gt-a-link">
+                            关于
+                        </a>
+                    
+                </div>
+            
+        </div>
+    </div>
+</nav>
+    <div class="post-container">
+        <div class="post-detail gt-bg-theme-color-second">
+            <article class="gt-post-content">
+                <h2 class="post-title">
+                    闲鱼App加密参数x-sign生成教程
+                </h2>
+                <div class="post-info">
+                    <time class="post-time gt-c-content-color-first">
+                        · 2020-04-08 ·
+                    </time>
+                    
+                        <a href="https://hyb.life/tag/mYoRUwZHf/" class="post-tags">
+                            # App破解
+                        </a>
+                    
+                        <a href="https://hyb.life/tag/9e05T8-AC/" class="post-tags">
+                            # Xposed
+                        </a>
+                    
+                </div>
+                <div class="post-content">
+                    <blockquote>
+<p>通过对闲鱼App抓包，可发现数据请求接口中都必须携带x-sign参数，而x-sign参数的生成方式不得而知，只能通过对App进行反编译破解。本教程将利用HermesAgent框架实现对x-sign生成方法的Hook及远程调用签名方法。</p>
+</blockquote>
+<!-- more -->
+<p><strong>本教程以闲鱼App v6.5.10版本为例</strong></p>
+<h3 id="第一步反编译闲鱼app">第一步：反编译闲鱼App</h3>
+<p>利用dex2jar工具反编译闲鱼APK文件，反编译具体流程可看我的教程《<a href="/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">App反编译工具dex2jar、JD-GUI的使用</a>》。<br>
+ps：dex2jar反编译闲鱼App过程可能会碰到内存溢出问题，需要把dex2jar的最大内存设置大一点；</p>
+<h3 id="第二步在源码中找到x-sign生成方法">第二步：在源码中找到x-sign生成方法</h3>
+<p>使用jd-gui工具打开反编译后的jar包查看源码；<br>
+然后使用jd-gui的搜索功能或者自己利用经验找x-sign生成方法吧，这一步会比较费时间，闲鱼App的源码经过了混淆，不同版本都不同，这里我最终通过“sign”关键词搜索到了，生成方法在mtopsdk.security.InnerSignImpl类下，具体代码如下：<br>
+<img src="https://hyb.life/post-images/1586310755375.png" alt="" loading="lazy"></p>
+<h3 id="第三步hook">第三步：Hook</h3>
+<p>找到生成方法后，我们就可以利用Xposed尝试进行Hook了。<br>
+使用XposedHelpers中的findAndHookMethod方法对签名方法进行hook，方法名为getMtopApiSign，参数有3个，分别为HashMap、String、String；然后重写XC_MethodHook中的beforeHookedMethod、afterHookedMethod两个方法，分别对输入参数、输出结果进行打印，具体代码如下：</p>
+<pre><code class="language-java">Class clazz = hostClassLoader.loadClass(&quot;mtopsdk.security.InnerSignImpl&quot;);
+XposedHelpers.findAndHookMethod(clazz, &quot;getMtopApiSign&quot;, HashMap.class, String.class, String.class, new XC_MethodHook() {
+    @Override
+    protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+        super.beforeHookedMethod(param);
+        XposedBridge.log(&quot;闲鱼x-sign参数0:&quot; + param.args[0].toString());
+        XposedBridge.log(&quot;闲鱼x-sign参数1:&quot; + param.args[1].toString());
+    }
+
+    @Override
+    protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+        super.afterHookedMethod(param);
+        XposedBridge.log(&quot;闲鱼x-sign结果:&quot; + param.getResult());
+    }
+});
+</code></pre>
+<p>安装至手机并开启当前Xposed模块进行测试。</p>
+<h3 id="第四步完善远程调用签名方法接口相关">第四步：完善远程调用签名方法接口相关</h3>
+<p>在invoke方法中完成远程调用相关代码的编写，利用反射调用签名方法，接口返回签名结果x-sign。</p>
+<h3 id="第五步测试">第五步：测试</h3>
+<p>安装HermesAgent至手机，在Xposed中开启该模块，并重启手机；<br>
+在浏览器中调用远程接口测试，效果如下:<br>
+<img src="https://hyb.life/post-images/1586314926072.png" alt="" loading="lazy"><br>
+HermesAgent相关可看我写的教程《<a href="/post/hermesagent-jie-shao-ji-yu-xposedrpc-shi-xian-fang-fa-ji-bie-de-qun-kong/">HermesAgent群控系统使用教程</a>》。</p>
+<p><strong>最近代码如下（最终代码中我还加了一个x-mini-wua参数的生成）：</strong></p>
+<pre><code class="language-java">package com.virjar.hermes.hermesagent.hookagent;
+
+import com.koushikdutta.async.http.Multimap;
+import com.virjar.hermes.hermesagent.aidl.InvokeRequest;
+import com.virjar.hermes.hermesagent.aidl.InvokeResult;
+import com.virjar.hermes.hermesagent.plugin.AgentCallback;
+import com.virjar.hermes.hermesagent.plugin.SharedObject;
+import com.virjar.hermes.hermesagent.util.CommonUtils;
+
+import org.apache.commons.lang3.StringUtils;
+
+import java.lang.reflect.Method;
+import java.net.URLDecoder;
+import java.util.HashMap;
+import java.util.Map;
+
+import de.robv.android.xposed.XC_MethodHook;
+import de.robv.android.xposed.XposedBridge;
+import de.robv.android.xposed.XposedHelpers;
+import de.robv.android.xposed.callbacks.XC_LoadPackage;
+
+/**
+ * 支持闲鱼App 6.5.10版本
+ *
+ * @author HuaYunBin
+ */
+public class XianYuSignAgent implements AgentCallback {
+
+    private Object signMethodObject;
+    private Method signMethod;
+    private Method wuaMethod;
+
+    @Override
+    public String targetPackageName() {
+        return &quot;com.taobao.idlefish&quot;;
+    }
+
+    @Override
+    public boolean needHook(XC_LoadPackage.LoadPackageParam loadPackageParam) {
+        return StringUtils.equalsIgnoreCase(loadPackageParam.processName, &quot;com.taobao.idlefish&quot;);
+    }
+
+    @Override
+    public InvokeResult invoke(InvokeRequest invokeRequest) {
+        String paramContent = invokeRequest.getParamContent();
+        Multimap nameValuePairs = CommonUtils.parseUrlEncoded(paramContent);
+
+        String deviceId = nameValuePairs.getString(&quot;deviceId&quot;);
+        String utdId = nameValuePairs.getString(&quot;utdId&quot;);
+        String ttId = nameValuePairs.getString(&quot;ttId&quot;);
+        // sid可为空
+        String sid = nameValuePairs.getString(&quot;sid&quot;);
+        // uid可为空
+        String uid = nameValuePairs.getString(&quot;uid&quot;);
+        String appKey = nameValuePairs.getString(&quot;appKey&quot;);
+        String t = nameValuePairs.getString(&quot;t&quot;);
+        String api = nameValuePairs.getString(&quot;api&quot;);
+        String data = nameValuePairs.getString(&quot;data&quot;);
+        String v = nameValuePairs.getString(&quot;v&quot;);
+        if (deviceId == null || utdId == null || appKey == null || t == null || api == null | data == null || v == null) {
+            return InvokeResult.failed(&quot;请求参数错误&quot;);
+        }
+
+        String sign = makeSign(deviceId, utdId, ttId, sid, uid, appKey, t, api, data, v);
+        String wua = makeWua(t, appKey);
+        if (sign == null) {
+            return InvokeResult.failed(&quot;生成Sign失败&quot;);
+        } else if (wua == null) {
+            return InvokeResult.failed(&quot;生成Wua失败&quot;);
+        }
+
+        Map&lt;String, Object&gt; resultMap = new HashMap&lt;&gt;(2);
+        resultMap.put(&quot;x-sign&quot;, sign);
+        resultMap.put(&quot;x-mini-wua&quot;, wua);
+        return InvokeResult.success(resultMap, SharedObject.context);
+    }
+
+    private String makeWua(String t, String appKey) {
+        HashMap&lt;String, String&gt; hashMap = new HashMap&lt;&gt;(2);
+        hashMap.put(&quot;pageName&quot;, &quot;&quot;);
+        hashMap.put(&quot;pageId&quot;, &quot;&quot;);
+        try {
+            return (String) wuaMethod.invoke(signMethodObject, t, appKey, null, hashMap, 8);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    private String makeSign(String deviceId, String utdId, String ttId, String sid, String uid, String appKey, String t, String api, String data, String v) {
+        HashMap&lt;String, String&gt; hashMap = new HashMap&lt;&gt;(11);
+        hashMap.put(&quot;deviceId&quot;, deviceId);
+        hashMap.put(&quot;utdid&quot;, utdId);
+        hashMap.put(&quot;ttid&quot;, ttId);
+        hashMap.put(&quot;appKey&quot;, appKey);
+        hashMap.put(&quot;api&quot;, api);
+        hashMap.put(&quot;data&quot;, URLDecoder.decode(data));
+        hashMap.put(&quot;x-features&quot;, &quot;27&quot;);
+        hashMap.put(&quot;v&quot;, v);
+        hashMap.put(&quot;sid&quot;, sid);
+        hashMap.put(&quot;t&quot;, t);
+        hashMap.put(&quot;uid&quot;, uid);
+        XposedBridge.log(&quot;生成Sign的Map值为: &quot; + hashMap.toString());
+
+        try {
+            return (String) signMethod.invoke(signMethodObject, hashMap, appKey, null);
+        } catch (Exception e) {
+            return null;
+        }
+    }
+
+    @Override
+    public void onXposedHotLoad() {
+        ClassLoader hostClassLoader = SharedObject.loadPackageParam.classLoader;
+        try {
+            Class clazz = hostClassLoader.loadClass(&quot;mtopsdk.security.InnerSignImpl&quot;);
+            XposedHelpers.findAndHookMethod(clazz, &quot;getMtopApiSign&quot;, HashMap.class, String.class, String.class, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    super.beforeHookedMethod(param);
+                    XposedBridge.log(&quot;闲鱼x-sign参数0:&quot; + param.args[0].toString());
+                    XposedBridge.log(&quot;闲鱼x-sign参数1:&quot; + param.args[1].toString());
+                }
+
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    super.afterHookedMethod(param);
+                    XposedBridge.log(&quot;闲鱼x-sign结果:&quot; + param.getResult());
+
+                    signMethodObject = param.thisObject;
+                    signMethod = (Method) param.method;
+                }
+            });
+            XposedHelpers.findAndHookMethod(clazz, &quot;getSecBodyDataEx&quot;, String.class, String.class, String.class, HashMap.class, int.class, new XC_MethodHook() {
+                @Override
+                protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
+                    super.beforeHookedMethod(param);
+                    XposedBridge.log(&quot;淘宝x-mini-wua参数0：&quot; + param.args[0]);
+                    XposedBridge.log(&quot;淘宝x-mini-wua参数1：&quot; + param.args[1]);
+                    XposedBridge.log(&quot;淘宝x-mini-wua参数2：&quot; + param.args[2]);
+                    XposedBridge.log(&quot;淘宝x-mini-wua参数3：&quot; + param.args[3]);
+                    XposedBridge.log(&quot;淘宝x-mini-wua参数4：&quot; + param.args[4]);
+                }
+
+                @Override
+                protected void afterHookedMethod(MethodHookParam param) throws Throwable {
+                    super.afterHookedMethod(param);
+                    XposedBridge.log(&quot;淘宝x-mini-wua结果：&quot; + param.getResult());
+
+                    wuaMethod = (Method) param.method;
+                }
+            });
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+
+                </div>
+            </article>
+        </div>
+
+        
+            <div class="next-post">
+                <div class="next gt-c-content-color-first">下一篇</div>
+                <a href="https://hyb.life/post/hermesagent-jie-shao-ji-yu-xposedrpc-shi-xian-fang-fa-ji-bie-de-qun-kong/" class="post-title gt-a-link">
+                    HermesAgent群控系统使用教程
+                </a>
+            </div>
+        
+
+        
+
+        <div class="site-footer gt-c-content-color-first">
+    <div class="slogan gt-c-content-color-first">Read(); Think(); Try(); Repeat();</div>
+    <div class="social-container">
+        
+            
+                <a href="https://github.com/huaxiaobin" target="_blank">
+                    <i class="fab fa-github gt-c-content-color-first"></i>
+                </a>
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+            
+        
+    </div>
+    Powered by <a target="_blank" href="https://gridea.dev/">Gridea</a> | <a target="_blank" href="http://www.beian.miit.gov.cn/">浙ICP备17008640号-2</a> | <a href="https://hyb.life/atom.xml" target="_blank">RSS</a>
+</div>
+
+<script>
+    hljs.initHighlightingOnLoad()
+</script>
+
+
+    </div>
+</div>
+</body>
+</html>
