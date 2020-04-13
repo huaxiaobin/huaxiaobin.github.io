@@ -4,18 +4,18 @@
       <meta charset="UTF-8"/>
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-<meta name="keywords" content="">
+<meta name="keywords" content="华云彬的博客 华小彬的博客 HuaYunBin HuaXiaoBin">
 <meta name="description" content="Read(); Think(); Try(); Repeat();">
-<meta name="theme-color" content="">
-<title>HuaYunBin&#39;s Blog</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1586793374554">
+<meta name="theme-color" content="#222222">
+<title>HuaYunBin</title>
+<link rel="shortcut icon" href="/favicon.ico?v=1586795585791">
 <link rel="stylesheet" href="/styles/main.css">
-<link rel="stylesheet" href="/media/css/pisces.css">
+<link rel="stylesheet" href="/media/css/gemini.css">
 
 <link rel="stylesheet" href="/media/fonts/font-awesome.css">
 <link href="//fonts.googleapis.com/css?family=Monda:300,300italic,400,400italic,700,700italic|Roboto Slab:300,300italic,400,400italic,700,700italic|Rosario:300,300italic,400,400italic,700,700italic|PT Mono:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
 
-<link href="/media/hljs/styles/github.css" rel="stylesheet">  
+<link href="/media/hljs/styles/atom-one-light.css" rel="stylesheet">  
 
 <script src="/media/hljs/highlight.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/velocity-animate@1.5.0/velocity.min.js"></script>
@@ -32,9 +32,9 @@
     <div class="head-top-line"></div>
     <div class="header-box">
       
-<div class=" ">
+<div class=" gemini">
   <header class="header  ">
-    <div class="blog-header box-shadow-wrapper  " id="header">
+    <div class="blog-header box-shadow-wrapper bg-color " id="header">
       <div class="nav-toggle" id="nav_toggle">
         <div class="toggle-box">
           <div class="line line-top"></div>
@@ -46,10 +46,12 @@
         <div class="site-title">
           
             <a href="/" class="brand">
-              <span>HuaYunBin&#39;s Blog</span>
+              <span>HuaYunBin</span>
             </a>  
           
         </div>
+        
+          <p class="subtitle">精于心，简于形</p>
         
       </div>
       <nav class="site-nav" id="site_nav">
@@ -130,14 +132,14 @@
     </div>
     <div class="main-continer">
       
-      <div class="section-layout  ">
+      <div class="section-layout  gemini">
         <div class="section-layout-wrapper">
           <div id="sidebarMeta" class="sidebar">
     
 <div class="sidebar-wrapper box-shadow-wrapper bg-color">
   <div class="sidebar-item">
     <img class="site-author-image right-motion" src="/images/avatar.png"/>
-    <p class="site-author-name">HuaYunBin&#39;s Blog</p>
+    <p class="site-author-name">HuaYunBin</p>
     <p class="site-description right-motion">Read(); Think(); Try(); Repeat();</p>
   </div>
   <div class="sidebar-item side-item-stat right-motion">
@@ -168,6 +170,19 @@
     
   
   
+    <div class="sidebar-item sidebar-item-social">
+      <div class="social-item">
+        
+          
+            <a href="https://github.com/huaxiaobin">
+              <i class="fa fa-github-alt" title="github"></i>
+            </a>
+          
+        
+        
+      </div>
+    </div>
+  
 
   
 
@@ -176,7 +191,7 @@
 </div>
 <script>
   let sidebarMeta = document.querySelector('#sidebarMeta');
-  let scheme = '';
+  let scheme = 'gemini';
   let sidebarWrapper = document.querySelector('.sidebar-wrapper');
   if (sidebarMeta && (scheme === 'pisces' || scheme === 'gemini')) {
     document.addEventListener('scroll', function(e) {
@@ -261,15 +276,15 @@
       <div class="footer-box">
   <footer class="footer">
     <div class="copyright">
-      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | © 2019-2020 Theme By <a href="https://github.com/hsxyhao/gridea-theme-next" target="_blank">HsxyHao</a>
+      Powered by <a href="https://github.com/getgridea/gridea" target="_blank">Gridea</a> | <a target="_blank" href="http://www.beian.miit.gov.cn/">浙ICP备17008640号-2</a>
     </div>
     <div class="poweredby">
-      Powered by <a target="_blank" href="https://gridea.dev/">Gridea</a> | <a target="_blank" href="http://www.beian.miit.gov.cn/">浙ICP备17008640号-2</a>
+      
     </div>
   </footer>
   
   
-  <div class=" back-to-top" id="back_to_top">
+  <div class="gemini back-to-top" id="back_to_top">
     <i class="fa fa-arrow-up"></i>
     
     <span class="scrollpercent">
@@ -278,14 +293,7 @@
     
   </div>
   
-    <div class="bg-img">
-      <img src="" />
-    </div>
   
-  
-  
-    
-
   
 </div>
 <script>
@@ -419,7 +427,7 @@
   }
 
   // 链接跳转
-  let newWindow = ''
+  let newWindow = 'false'
   if (newWindow === 'true') {
     let links = document.querySelectorAll('.post-body a')
     links.forEach(item => {
