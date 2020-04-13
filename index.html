@@ -8,7 +8,7 @@
 <meta name="description" content="Read(); Think(); Try(); Repeat();">
 <meta name="theme-color" content="#222222">
 <title>HuaYunBin</title>
-<link rel="shortcut icon" href="/favicon.ico?v=1586796009338">
+<link rel="shortcut icon" href="/favicon.ico?v=1586796379831">
 <link rel="stylesheet" href="/styles/main.css">
 <link rel="stylesheet" href="/media/css/gemini.css">
 
@@ -59,6 +59,8 @@
           
             
             
+              
+            
             <li class="nav-item nav-item-active">
               
               
@@ -69,6 +71,8 @@
             </li>
           
             
+            
+              
             
             <li class="nav-item ">
               
@@ -81,6 +85,8 @@
           
             
             
+              
+            
             <li class="nav-item ">
               
               
@@ -92,6 +98,8 @@
           
             
             
+              
+            
             <li class="nav-item ">
               
               
@@ -101,6 +109,16 @@
               
             </li>
           
+          
+            
+              <li class="nav-item ">
+                <a href="/friends" target="_self">
+                  
+                    fa-ship友情链接
+                  
+                </a>
+              </li>
+            
           
         </ul>
       </nav>
@@ -184,8 +202,6 @@
     </div>
   
 
-  
-
 
 </div>
 </div>
@@ -262,16 +278,10 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <blockquote>
+          <blockquote>
 <p>使用Charles、Fiddle等抓包工具对淘系App进行抓包时，你会发现总是抓不到包，出现请求不走Charles代理的情况。这是因为淘系app底层网络通信的协议并不是普通的http协议，而是自己实现的一套私有协议Spdy。</p>
 </blockquote>
 
-            
-              <img src="/post-images/jie-jue-tao-bao-xian-yu-deng-tao-xi-app-wu-fa-zhua-bao-wen-ti.png" />
-            
-          
         
         
         <div class="post-button text-center">
@@ -335,16 +345,10 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <blockquote>
+          <blockquote>
 <p>通过对某鱼App抓包，可发现数据请求接口中都必须携带x-sign参数，而x-sign参数的生成方式不得而知，只能通过对App进行反编译破解。本教程将利用HermesAgent框架实现对x-sign生成方法的Hook及远程调用签名方法。</p>
 </blockquote>
 
-            
-              <img src="/post-images/xian-yu-app-jia-mi-can-shu-x-sign-sheng-cheng-jiao-cheng.png" />
-            
-          
         
         
         <div class="post-button text-center">
@@ -402,16 +406,10 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <blockquote>
+          <blockquote>
 <p><a href="https://gitee.com/virjar/hermesagent/tree/master">HermesAgent</a>是virjar大神写的一个Android群控系统，基于xposed+RPC实现方法级别的群控。HermesAgent是hermes系统的客户端模块，他是种植在手机里面的一个agent，同时也是一个xposed的模块插件。</p>
 </blockquote>
 
-            
-              <img src="/post-images/hermesagent-jie-shao-ji-yu-xposedrpc-shi-xian-fang-fa-ji-bie-de-qun-kong.png" />
-            
-          
         
         
         <div class="post-button text-center">
@@ -469,16 +467,10 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <blockquote>
+          <blockquote>
 <p>如今，随着各大公司对数据安全愈发重视，App数据的爬取也变得越来越难。大多数主流App都对自己的数据接口进行了参数的加密，如淘系App的X-sign、抖音系App的X-grogon、拼多多App的anti-token等等，如果请求的时候不携带加密参数，就无法爬取数据。</p>
 </blockquote>
 
-            
-              <img src="/post-images/app-jia-mi-hermesagent.png" />
-            
-          
         
         
         <div class="post-button text-center">
@@ -536,16 +528,10 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <blockquote>
+          <blockquote>
 <p><code>Xposed</code>是GitHub上rovo89大神设计的一个针对Android平台的动态劫持项目，通过替换/system/bin/app_process程序控制zygote进程，使得app_process在启动过程中会加载XposedBridge.jar这个jar包，从而完成对Zygote进程及其创建的Dalvik虚拟机的劫持。</p>
 </blockquote>
 
-            
-              <img src="/post-images/xposed-kuang-jia-hook-shi-li-jiao-cheng.png" />
-            
-          
         
         
         <div class="post-button text-center">
@@ -603,14 +589,8 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <p><a href="https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml">Xvfb</a>是流行的虚拟现实库，可以使很多需要图形界面的程序虚拟运行；</p>
+          <p><a href="https://www.x.org/releases/X11R7.6/doc/man/man1/Xvfb.1.xhtml">Xvfb</a>是流行的虚拟现实库，可以使很多需要图形界面的程序虚拟运行；</p>
 
-            
-              <img src="/post-images/linux-xu-ni-ping-mu-xvfb-de-jie-shao.png" />
-            
-          
         
         
         <div class="post-button text-center">
@@ -668,14 +648,8 @@
 </header>
       <div class="post-body">
         
-          
-          
-            <p>如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。</p>
+          <p>如今爬虫的开发离不开从App爬取数据，本文将介绍如何使用dex2jar反编译一个Android App以及使用JD-GUI工具查看App源码。</p>
 
-            
-              <img src="/post-images/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong.png" />
-            
-          
         
         
         <div class="post-button text-center">
