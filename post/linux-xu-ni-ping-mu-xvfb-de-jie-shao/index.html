@@ -4,7 +4,7 @@
 <meta name="description" content=""/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Linux虚拟屏幕Xvfb的介绍 | HuaYunBin&#39;s Blog</title>
-<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1586761357967">
+<link rel="shortcut icon" href="https://hyb.life/favicon.ico?v=1586765118463">
 <link href="https://cdn.bootcss.com/font-awesome/5.11.2/css/all.css" rel="stylesheet">
 <link rel="stylesheet" href="https://hyb.life/styles/main.css">
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
@@ -159,7 +159,7 @@ x11vnc -listen 0.0.0.0 -rfbport 5900 -noipv6 -passwd password -display :7
     repo: 'huaxiaobin.github.io',
     owner: 'huaxiaobin',
     admin: ['huaxiaobin'],
-    id: location.pathname,      // Ensure uniqueness and length less than 50
+    id: decodeURI("{{ page.url }}"),      // Ensure uniqueness and length less than 50
     distractionFreeMode: false  // Facebook-like distraction free mode
   })
 
