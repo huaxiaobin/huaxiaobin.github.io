@@ -2084,6 +2084,12 @@ body {
     }.bg-color {
       background-color: #fffffffe;
     }
+    .gemini .blog-header, .gemini .sidebar-wrapper, .gemini .article-wrapper, .gemini .post, .gemini .page, .gemini .section, .gemini .section-box, .gemini .sidebar-box, .gemini .friends-section {
+      border-radius: Geminipx;
+    }
+    .pisces .blog-header, .pisces .sidebar-wrapper, .pisces .article-wrapper, .pisces .section, .pisces .sidebar-box, .pisces .friends-section {
+      border-radius: Geminipx;
+    }
       .site-meta {
         background: #222222 !important;
       }
@@ -2098,6 +2104,4 @@ body {
     }
     .mist .site-title i {
       background: #FFFFFFfe;
-    }.box-shadow-wrapper {
-      box-shadow: none !important;
     }
