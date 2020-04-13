@@ -2,7 +2,7 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://hyb.life</id>
     <title>HuaYunBin&apos;s Blog</title>
-    <updated>2020-04-13T08:08:39.037Z</updated>
+    <updated>2020-04-13T09:01:32.899Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://hyb.life"/>
     <link rel="self" href="https://hyb.life/atom.xml"/>
@@ -42,26 +42,26 @@
 ]]></content>
     </entry>
     <entry>
-        <title type="html"><![CDATA[闲鱼App加密参数x-sign生成教程]]></title>
+        <title type="html"><![CDATA[某鱼App加密参数x-sign生成教程]]></title>
         <id>https://hyb.life/post/xian-yu-app-jia-mi-can-shu-x-sign-sheng-cheng-jiao-cheng/</id>
         <link href="https://hyb.life/post/xian-yu-app-jia-mi-can-shu-x-sign-sheng-cheng-jiao-cheng/">
         </link>
         <updated>2020-04-07T16:07:08.000Z</updated>
         <summary type="html"><![CDATA[<blockquote>
-<p>通过对闲鱼App抓包，可发现数据请求接口中都必须携带x-sign参数，而x-sign参数的生成方式不得而知，只能通过对App进行反编译破解。本教程将利用HermesAgent框架实现对x-sign生成方法的Hook及远程调用签名方法。</p>
+<p>通过对某鱼App抓包，可发现数据请求接口中都必须携带x-sign参数，而x-sign参数的生成方式不得而知，只能通过对App进行反编译破解。本教程将利用HermesAgent框架实现对x-sign生成方法的Hook及远程调用签名方法。</p>
 </blockquote>
 ]]></summary>
         <content type="html"><![CDATA[<blockquote>
-<p>通过对闲鱼App抓包，可发现数据请求接口中都必须携带x-sign参数，而x-sign参数的生成方式不得而知，只能通过对App进行反编译破解。本教程将利用HermesAgent框架实现对x-sign生成方法的Hook及远程调用签名方法。</p>
+<p>通过对某鱼App抓包，可发现数据请求接口中都必须携带x-sign参数，而x-sign参数的生成方式不得而知，只能通过对App进行反编译破解。本教程将利用HermesAgent框架实现对x-sign生成方法的Hook及远程调用签名方法。</p>
 </blockquote>
 <!-- more -->
-<p><strong>本教程以闲鱼App v6.5.10版本为例</strong></p>
-<h3 id="第一步反编译闲鱼app">第一步：反编译闲鱼App</h3>
-<p>利用dex2jar工具反编译闲鱼APK文件，反编译具体流程可看我的教程《<a href="/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">App反编译工具dex2jar、JD-GUI的使用</a>》。<br>
-ps：dex2jar反编译闲鱼App过程可能会碰到内存溢出问题，需要把dex2jar的最大内存设置大一点；</p>
+<p><strong>本教程以某鱼App v6.5.10版本为例</strong></p>
+<h3 id="第一步反编译某鱼app">第一步：反编译某鱼App</h3>
+<p>利用dex2jar工具反编译某鱼APK文件，反编译具体流程可看我的教程《<a href="/post/app-fan-bian-yi-gong-ju-dex2jarjd-gui-de-shi-yong/">App反编译工具dex2jar、JD-GUI的使用</a>》。<br>
+ps：dex2jar反编译某鱼App过程可能会碰到内存溢出问题，需要把dex2jar的最大内存设置大一点；</p>
 <h3 id="第二步在源码中找到x-sign生成方法">第二步：在源码中找到x-sign生成方法</h3>
 <p>使用jd-gui工具打开反编译后的jar包查看源码；<br>
-然后使用jd-gui的搜索功能或者自己利用经验找x-sign生成方法吧，这一步会比较费时间，闲鱼App的源码经过了混淆，不同版本都不同，这里我最终通过“sign”关键词搜索到了，生成方法在mtopsdk.security.InnerSignImpl类下，具体代码如下：<br>
+然后使用jd-gui的搜索功能或者自己利用经验找x-sign生成方法吧，这一步会比较费时间，某鱼App的源码经过了混淆，不同版本都不同，这里我最终通过“sign”关键词搜索到了，生成方法在mtopsdk.security.InnerSignImpl类下，具体代码如下：<br>
 <img src="https://hyb.life/post-images/1586310755375.png" alt="" loading="lazy"></p>
 <h3 id="第三步hook">第三步：Hook</h3>
 <p>找到生成方法后，我们就可以利用Xposed尝试进行Hook了。<br>
@@ -71,14 +71,14 @@ XposedHelpers.findAndHookMethod(clazz, &quot;getMtopApiSign&quot;, HashMap.class
     @Override
     protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
         super.beforeHookedMethod(param);
-        XposedBridge.log(&quot;闲鱼x-sign参数0:&quot; + param.args[0].toString());
-        XposedBridge.log(&quot;闲鱼x-sign参数1:&quot; + param.args[1].toString());
+        XposedBridge.log(&quot;某鱼x-sign参数0:&quot; + param.args[0].toString());
+        XposedBridge.log(&quot;某鱼x-sign参数1:&quot; + param.args[1].toString());
     }
 
     @Override
     protected void afterHookedMethod(MethodHookParam param) throws Throwable {
         super.afterHookedMethod(param);
-        XposedBridge.log(&quot;闲鱼x-sign结果:&quot; + param.getResult());
+        XposedBridge.log(&quot;某鱼x-sign结果:&quot; + param.getResult());
     }
 });
 </code></pre>
@@ -210,14 +210,14 @@ public class XianYuSignAgent implements AgentCallback {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     super.beforeHookedMethod(param);
-                    XposedBridge.log(&quot;闲鱼x-sign参数0:&quot; + param.args[0].toString());
-                    XposedBridge.log(&quot;闲鱼x-sign参数1:&quot; + param.args[1].toString());
+                    XposedBridge.log(&quot;某鱼x-sign参数0:&quot; + param.args[0].toString());
+                    XposedBridge.log(&quot;某鱼x-sign参数1:&quot; + param.args[1].toString());
                 }
 
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     super.afterHookedMethod(param);
-                    XposedBridge.log(&quot;闲鱼x-sign结果:&quot; + param.getResult());
+                    XposedBridge.log(&quot;某鱼x-sign结果:&quot; + param.getResult());
 
                     signMethodObject = param.thisObject;
                     signMethod = (Method) param.method;
@@ -227,17 +227,17 @@ public class XianYuSignAgent implements AgentCallback {
                 @Override
                 protected void beforeHookedMethod(MethodHookParam param) throws Throwable {
                     super.beforeHookedMethod(param);
-                    XposedBridge.log(&quot;淘宝x-mini-wua参数0：&quot; + param.args[0]);
-                    XposedBridge.log(&quot;淘宝x-mini-wua参数1：&quot; + param.args[1]);
-                    XposedBridge.log(&quot;淘宝x-mini-wua参数2：&quot; + param.args[2]);
-                    XposedBridge.log(&quot;淘宝x-mini-wua参数3：&quot; + param.args[3]);
-                    XposedBridge.log(&quot;淘宝x-mini-wua参数4：&quot; + param.args[4]);
+                    XposedBridge.log(&quot;某宝x-mini-wua参数0：&quot; + param.args[0]);
+                    XposedBridge.log(&quot;某宝x-mini-wua参数1：&quot; + param.args[1]);
+                    XposedBridge.log(&quot;某宝x-mini-wua参数2：&quot; + param.args[2]);
+                    XposedBridge.log(&quot;某宝x-mini-wua参数3：&quot; + param.args[3]);
+                    XposedBridge.log(&quot;某宝x-mini-wua参数4：&quot; + param.args[4]);
                 }
 
                 @Override
                 protected void afterHookedMethod(MethodHookParam param) throws Throwable {
                     super.afterHookedMethod(param);
-                    XposedBridge.log(&quot;淘宝x-mini-wua结果：&quot; + param.getResult());
+                    XposedBridge.log(&quot;某宝x-mini-wua结果：&quot; + param.getResult());
 
                     wuaMethod = (Method) param.method;
                 }
