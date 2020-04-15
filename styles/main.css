@@ -409,6 +409,7 @@ blockquote {
   margin: 20px 40px 40px;
 }
 .firends-item {
+  display: inline-block;
   margin: 0 10px;
   width: 125px;
   font-size: 1rem;
@@ -430,13 +431,17 @@ blockquote {
   transform: scale(1.05);
 }
 .firends-item .top {
-  font-size: 18px;
+  font-size: 12px;
   font-weight: 900;
   font-style: normal;
   font-weight: 700;
   text-decoration: none;
   border: 0;
   text-align: center;
+  width: 125px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
 .firends-item .bottom {
   font-size: 12px;
@@ -2085,10 +2090,10 @@ body {
       background-color: #fffffffe;
     }
     .gemini .blog-header, .gemini .sidebar-wrapper, .gemini .article-wrapper, .gemini .post, .gemini .page, .gemini .section, .gemini .section-box, .gemini .sidebar-box, .gemini .friends-section {
-      border-radius: Geminipx;
+      border-radius: 10px;
     }
     .pisces .blog-header, .pisces .sidebar-wrapper, .pisces .article-wrapper, .pisces .section, .pisces .sidebar-box, .pisces .friends-section {
-      border-radius: Geminipx;
+      border-radius: 10px;
     }
       .site-meta {
         background: #222222 !important;
