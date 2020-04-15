@@ -2109,4 +2109,6 @@ body {
     }
     .mist .site-title i {
       background: #FFFFFFfe;
-    }
+    }a.brand {
+    padding: 0;
+}
